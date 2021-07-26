@@ -3,29 +3,29 @@ package TicTacToe;
 import java.util.*;
 public class TicTacToe { 
     static boolean winner;
-    static String human="O";
-    static String ai="X";
+    static char human='O';
+    static char ai='X';
     static class Move {
         int row,col;
     }
-    static boolean isMovesLeft(String[][] board){
+    static boolean isMovesLeft(char[][] board){
     for (int i = 0; i < 3; i++){
         for (int j = 0; j < 3; j++){
-            if (board[i][j].equals("-")){
+            if (board[i][j]=='_'){
                 return true;
             }
         }
     }
     return false;
 }
-    public static int evaluate(String[][] board){
+    public static int evaluate(char[][] board){
         for (int i = 0; i < 3; i++)
     {
-        if (board[i][0].equals(board[i][1]) &&board[i][1].equals(board[i][2]))
+        if (board[i][0]==board[i][1] &&board[i][1]==board[i][2])
         {
-            if (board[i][0].equals("X"))
+            if (board[i][0]=='X')
                 return +10;
-            else if (board[i][0].equals("O"))
+            else if (board[i][0]=='O')
                 return -10;
         }
     }
@@ -33,30 +33,30 @@ public class TicTacToe {
     // Checking for Columns for X or O victory.
     for (int j = 0; j < 3; j++)
     {
-        if (board[0][j].equals(board[1][j]) && board[1][j].equals(board[2][j]))
+        if (board[0][j]==board[1][j] && board[1][j]==board[2][j])
         {
-            if (board[0][j].equals("X"))
+            if (board[0][j]=='X')
                 return +10;
  
-            else if (board[0][j].equals("O"))
+            else if (board[0][j]=='O')
                 return -10;
         }
     }
  
     // Checking for Diagonals for X or O victory.
-    if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]))
+    if (board[0][0]==board[1][1] && board[1][1]==board[2][2])
     {
-        if (board[0][0].equals("X"))
+        if (board[0][0]=='X')
             return +10;
-        else if (board[0][0].equals("O"))
+        else if (board[0][0]=='O')
             return -10;
     }
  
-    if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0]))
+    if (board[0][2]==board[1][1] && board[1][1]==board[2][0])
     {
-        if (board[0][2].equals("X"))
+        if (board[0][2]=='X')
             return +10;
-        else if (board[0][2].equals("O"))
+        else if (board[0][2]=='O')
             return -10;
     }
  
@@ -64,75 +64,130 @@ public class TicTacToe {
     return 0;
     }
 
-    public static void setUpGame(String[][] board){
+    public static void setUpGame(char[][] board){
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
-                board[i][j]="-";
+                board[i][j]='_';
             }
         }
     }
-    public static Move bestMove(String[][] board){
-        Move bestMove=new Move();
-        bestMove.row=-1;
-        bestMove.col=-1;
-        int bestScore=-1000;
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
-                if(board[i][j].equals("-")){
-                    board[i][j]="X";
-                    int score = minimax(board,false,0);
-                    board[i][j]="-";
-                    if(score>bestScore){
-                        bestScore=score;
-                        bestMove.row=i;
-                        bestMove.col=j;
-                    }
+    public static Move bestMove(char[][] board){
+        int bestVal = -1000;
+    Move bestMove = new Move();
+    bestMove.row = -1;
+    bestMove.col = -1;
+ 
+    // Traverse all cells, evaluate minimax function
+    // for all empty cells. And return the cell
+    // with optimal value.
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            // Check if cell is empty
+            if (board[i][j]=='_')
+            {
+                // Make the move
+                board[i][j] = 'X';
+ 
+                // compute evaluation function for this
+                // move.
+                int moveVal = minimax(board, 0, false);
+ 
+                // Undo the move
+                board[i][j] = '_';
+ 
+                // If the value of the current move is
+                // more than the best value, then update
+                // best/
+                if (moveVal > bestVal)
+                {
+                    bestMove.row = i;
+                    bestMove.col = j;
+                    bestVal = moveVal;
                 }
             }
         }
-        return bestMove;
     }
+    return bestMove;
+}
     
-    public static int minimax(String[][] board,boolean isMax,int depth){
-        int score=evaluate(board);
-        if(score==10){
-            return score;
-        }
-        if(score==-10){
-            return score;
-        }
-        if(score==0){
-            return 0;
-        }
-        if(isMax){
-            int bestScore=-1000;;
-            for(int i=0;i<3;i++){
-                for(int j=0;j<3;j++){
-                    if(board[i][j].equals("-")){
-                        board[i][j]="X";
-                        bestScore=Math.max(bestScore,minimax(board,false,depth+1));
-                        board[i][j]="-";
-                    }
-                }
-            }
-            return bestScore;
-        }else if(!isMax){
-            int bestScore=+1000;
-            for(int i=0;i<3;i++){
-                for(int j=0;j<3;j++){
-                    if(board[i][j].equals("-")){
-                        board[i][j]="O";
-                        bestScore=Math.min(bestScore,minimax(board,true,depth+1));
-                        board[i][j]="-";
-                    }
-                }
-            }
-            return bestScore;
-        }
+    public static int minimax(char[][] board,int depth,boolean isMax){
+        int score = evaluate(board);
+ 
+    // If Maximizer has won the game
+    // return his/her evaluated score
+    if (score == 10)
+        return score;
+ 
+    // If Minimizer has won the game
+    // return his/her evaluated score
+    if (score == -10)
+        return score;
+ 
+    // If there are no more moves and
+    // no winner then it is a tie
+    if (isMovesLeft(board) == false)
         return 0;
+ 
+    // If this maximizer's move
+    if (isMax)
+    {
+        int best = -1000;
+ 
+        // Traverse all cells
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                // Check if cell is empty
+                if (board[i][j]=='_')
+                {
+                    // Make the move
+                    board[i][j] = 'X';
+ 
+                    // Call minimax recursively and choose
+                    // the maximum value
+                    best = Math.max(best, minimax(board,depth + 1, !isMax));
+ 
+                    // Undo the move
+                    board[i][j] ='_';
+                }
+            }
+        }
+        return best;
+    }
+ 
+    // If this minimizer's move
+    else
+    {
+        int best = 1000;
+ 
+        // Traverse all cells
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                // Check if cell is empty
+                if (board[i][j]=='_')
+                {
+                    // Make the move
+                    board[i][j] = 'O';
+ 
+                    // Call minimax recursively and choose
+                    // the minimum value
+                    best = Math.min(best, minimax(board,depth + 1, !isMax));
+ 
+                    // Undo the move
+                    board[i][j] = '_';
+                }
+            }
+        }
+        return best;
+    }
     }
   
-    public static void printGame(String[][] board){
+    public static void printGame(char[][] board){
         System.out.println("----------------------");
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
@@ -142,34 +197,34 @@ public class TicTacToe {
             System.out.println("----------------------");
         }
     }
-    public static void move(String[][] board,int move){
+    public static void move(char[][] board,int move){
         switch(move){
             case 1:
-             board[0][0]="O";
+             board[0][0]='O';
              break;
             case 2:
-             board[0][1]="O";
+             board[0][1]='O';
              break;
             case 3:
-             board[0][2]="O";
+             board[0][2]='O';
              break;
             case 4:
-             board[1][0]="O";
+             board[1][0]='O';
              break;
             case 5:
-             board[1][1]="O";
+             board[1][1]='O';
              break;
             case 6:
-             board[1][2]="O";
+             board[1][2]='O';
              break;
             case 7:
-             board[2][0]="O";
+             board[2][0]='O';
              break;
             case 8:
-             board[2][1]="O";
+             board[2][1]='O';
              break;
             case 9:
-             board[2][2]="O";
+             board[2][2]='O';
              break;
         }
     }
@@ -196,73 +251,93 @@ public class TicTacToe {
         }
         return move;
     }
-    public String checkWin(String[][] board){
+    public char checkWin(char[][] board){
         for(int i=0;i<8;i++){
-            String line=null;
+            ArrayList<Character> line = new ArrayList<Character>();
             switch (i) {
                 case 0:
-                    line = board[0][0]+board[0][1]+board[0][2];
+                    line.add(board[0][0]);
+                    line.add(board[0][1]);
+                    line.add(board[0][2]);
                     break;
                 case 1:
-                    line=board[1][0]+board[1][1]+board[1][2];
+                    line.add(board[1][0]);
+                    line.add(board[1][1]);
+                    line.add(board[1][2]);
                     break;
                 case 2:
-                    line=board[2][0]+board[2][1]+board[2][2];
+                    line.add(board[2][0]);
+                    line.add(board[2][1]);
+                    line.add(board[2][2]);
                     break;
                 case 3:
-                    line=board[0][0]+board[1][0]+board[2][0];
+                    line.add(board[0][0]);
+                    line.add(board[1][0]);
+                    line.add(board[2][0]);
                     break;
                 case 4:
-                    line=board[0][1]+board[1][1]+board[2][1];
+                    line.add(board[0][1]);
+                    line.add(board[1][1]);
+                    line.add(board[2][1]);
                     break;
                 case 5:
-                    line=board[0][2]+board[1][2]+board[2][2];
+                    line.add(board[0][2]);
+                    line.add(board[1][2]);
+                    line.add(board[2][2]);
                     break;
                 case 6:
-                    line=board[0][0]+board[1][1]+board[2][2];
+                    line.add(board[0][0]);
+                    line.add(board[1][1]);
+                    line.add(board[2][2]);
                     break;
                 case 7:
-                    line = board[0][2]+board[1][1]+board[2][0];
+                    line.add(board[0][2]);
+                    line.add(board[1][1]);
+                    line.add(board[2][0]);
+                    break;
                 }
-            
-            if (line.equals("XXX")){
-                winner=true;
-                return "X";
-            }
+                if(line.get(0)=='X' && line.get(1)=='X'&& line.get(2)=='X' ){
+                    winner=true;
+                    return 'X';
+                }
               
             // For O winner
-            else if (line.equals("OOO")){
+            else if(line.get(0)=='O' && line.get(1)=='O'&& line.get(2)=='O' ){
                 winner=true;
-                return "O";
+                return 'O';
             }
         }
-        return null;
+        if(board[0][0]!='_' && board[0][1]!='_' && board[0][2]!='_' && board[1][0]!='_' && board[1][1]!='_' && board[1][2]!='_' && board[2][0]!='_' && board[2][1]!='_' && board[2][2]!='_'){
+            winner =true;
+            return 'D';
+        }
+        return '0';
     }
     public static void main(String[] args){
         TicTacToe game = new TicTacToe();
         Scanner sc = new Scanner(System.in);
         HashSet<Integer> set = new HashSet<Integer>();
-        String board[][] = {{ "-", "-", "-" },
-                      { "-", "-", "-" },
-                      { "-", "-", "-"}};
+        char board[][] = {{ '-', '-', '-' },
+                      { '-', '-', '-' },
+                      { '-', '-', '-'}};
         
         int humanMove=0;
+        int count=0;
         setUpGame(board);
         System.out.println("Game Started");
         printGame(board);
-        int count=0;
          while(!winner){
              Move aiMove=bestMove(board);
-             System.out.println(aiMove.row);
-             System.out.println(aiMove.col);
-             board[aiMove.row][aiMove.col]="X";
-             count++;
+             board[aiMove.row][aiMove.col]='X';
              printGame(board);
              set.add(setAiMove(aiMove.row,aiMove.col));
-             String ans2=game.checkWin(board);
-             if(winner){
+             char ans2=game.checkWin(board);
+             if(winner && ans2!='D'){
                  System.out.println("Game Over " +ans2);
                  break;
+             }else if(ans2=='D'){
+                System.out.println("DRAW GAME WELL PLAYED");
+                break;
              }
              humanMove=sc.nextInt();
              while(set.contains(humanMove)){
@@ -272,17 +347,15 @@ public class TicTacToe {
              if(!set.contains(humanMove)){
                  move(board,humanMove);
                  set.add(humanMove);
-                 count++;
              }
              printGame(board);
-             String ans=game.checkWin(board);
-             if(winner){
+             char ans=game.checkWin(board);
+             if(winner && ans!='D'){
                  System.out.println("Game Over " +ans);
                  break;
-             }
-             if(!winner && count==9){
-                 System.out.println("Draw Game");
-                 break;
+             }else if(ans2=='D'){
+                System.out.println("DRAW GAME WELL PLAYED");
+                break;
              }
              printGame(board);
         }
