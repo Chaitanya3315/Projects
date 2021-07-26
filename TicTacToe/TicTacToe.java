@@ -2,55 +2,62 @@ package TicTacToe;
 
 import java.util.*;
 public class TicTacToe {
-   protected static char board[][]; 
-   protected static boolean table[][];
-    protected static char turn;
+   protected static String board[][]; 
     static boolean winner;
-    static char human,ai;
+    static String human="O";
+    static String ai="X";
     static class Move {
         int row,col;
     }
+    static boolean isMovesLeft(){
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++){
+            if (board[i][j].equals("-")){
+                return true;
+            }
+        }
+    }
+    return false;
+}
     public static int evaluate(){
-        for (int row = 0; row < 3; row++)
+        for (int i = 0; i < 3; i++)
     {
-        if (board[row][0] == board[row][1] &&
-            board[row][1] == board[row][2])
+        if (board[i][0].equals(board[i][1]) &&board[i][1].equals(board[i][2]))
         {
-            if (board[row][0] ==human)
+            if (board[i][0].equals("X"))
                 return +10;
-            else if (board[row][0] == ai)
+            else if (board[i][0].equals("O"))
                 return -10;
         }
     }
 
     // Checking for Columns for X or O victory.
-    for (int col = 0; col < 3; col++)
+    for (int j = 0; j < 3; j++)
     {
-        if (board[0][col] == board[1][col] &&
-            board[1][col] == board[2][col])
+        if (board[0][j].equals(board[1][j]) && board[1][j].equals(board[2][j]))
         {
-            if (board[0][col] == human)
+            if (board[0][j].equals("X"))
                 return +10;
  
-            else if (board[0][col] == ai)
+            else if (board[0][j].equals("O"))
                 return -10;
         }
     }
  
     // Checking for Diagonals for X or O victory.
-    if (board[0][0] == board[1][1] && board[1][1] == board[2][2])
+    if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]))
     {
-        if (board[0][0] == human)
+        if (board[0][0].equals("X"))
             return +10;
-        else if (board[0][0] == ai)
+        else if (board[0][0].equals("O"))
             return -10;
     }
  
-    if (board[0][2] == board[1][1] && board[1][1] == board[2][0])
+    if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0]))
     {
-        if (board[0][2] == human)
+        if (board[0][2].equals("X"))
             return +10;
-        else if (board[0][2] == ai)
+        else if (board[0][2].equals("O"))
             return -10;
     }
  
@@ -61,15 +68,7 @@ public class TicTacToe {
     public static void setUpGame(){
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
-                board[i][j]='-';
-            }
-        }
-    }
-    public static void setUpTable(){
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
-                table[i][j]=false;
-                
+                board[i][j]="-";
             }
         }
     }
@@ -77,13 +76,13 @@ public class TicTacToe {
         Move bestMove=new Move();
         bestMove.row=-1;
         bestMove.col=-1;
-        int bestScore=Integer.MIN_VALUE;
+        int bestScore=-1000;
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
-                if(board[i][j]=='-'){
-                    board[i][j]=turn;
+                if(board[i][j].equals("-")){
+                    board[i][j]="X";
                     int score = minimax(false,0);
-                    board[i][j]='-';
+                    board[i][j]="-";
                     if(score>bestScore){
                         bestScore=score;
                         bestMove.row=i;
@@ -92,7 +91,7 @@ public class TicTacToe {
                 }
             }
         }
-        return bestMove;  
+        return bestMove;
     }
     
     public static int minimax(boolean isMax,int depth){
@@ -107,25 +106,25 @@ public class TicTacToe {
             return 0;
         }
         if(isMax){
-            int bestScore=Integer.MIN_VALUE;
+            int bestScore=-1000;;
             for(int i=0;i<3;i++){
                 for(int j=0;j<3;j++){
-                    if(board[i][j]=='-'){
-                        board[i][j]='X';
+                    if(board[i][j].equals("-")){
+                        board[i][j]="X";
                         bestScore=Math.max(bestScore,minimax(!isMax,depth+1));
-                        board[i][j]='-';
+                        board[i][j]="-";
                     }
                 }
             }
             return bestScore;
         }else if(!isMax){
-            int bestScore=Integer.MAX_VALUE;
+            int bestScore=+1000;
             for(int i=0;i<3;i++){
                 for(int j=0;j<3;j++){
-                    if(board[i][j]=='-'){
-                        board[i][j]='O';
+                    if(board[i][j].equals("-")){
+                        board[i][j]="O";
                         bestScore=Math.min(bestScore,minimax(!isMax,depth+1));
-                        board[i][j]='-';
+                        board[i][j]="-";
                     }
                 }
             }
@@ -144,7 +143,38 @@ public class TicTacToe {
             System.out.println("----------------------");
         }
     }
-    public static void move(int row,int col){
+    public static void move(int move){
+        switch(move){
+            case 1:
+             board[0][0]="O";
+             break;
+            case 2:
+             board[0][1]="O";
+             break;
+            case 3:
+             board[0][2]="O";
+             break;
+            case 4:
+             board[1][0]="O";
+             break;
+            case 5:
+             board[1][1]="O";
+             break;
+            case 6:
+             board[1][2]="O";
+             break;
+            case 7:
+             board[2][0]="O";
+             break;
+            case 8:
+             board[2][1]="O";
+             break;
+            case 9:
+             board[2][2]="O";
+             break;
+        }
+    }
+    public static int setAiMove(int row,int col){
         int move=0;
         if(row==0 && col==0){
             move=1;
@@ -165,162 +195,87 @@ public class TicTacToe {
         }else if(row==2 && col==2){
             move=9;
         }
-        switch(move){
-            case 1 :
-               board[0][0]=turn;
-               break;
-            case 2 :
-               board[0][1]=turn;
-               break;
-            case 3 :
-               board[0][2]=turn;
-               break;
-             case 4 :
-               board[1][0]=turn;
-               break;
-            case 5 :
-               board[1][1]=turn;
-               break;
-            case 6 :
-               board[1][2]=turn;
-               break;
-            case 7:
-               board[2][0]=turn;
-               break;
-            case 8:
-               board[2][1]=turn;
-               break;
-            case 9 :
-               board[2][2]=turn;
-               break;
-            default :
-             System.out.println("Invalid");
-        }
+        return move;
     }
     public String checkWin(){
-        if(board[1][0]=='X' &&  board[1][1]=='X' && board[1][2]=='X'){
-            winner = true;
-            return "X";
-          }
-          if(board[1][0]=='O' &&  board[1][1]=='O' && board[1][2]=='O'){
-            winner = true;
-            return "O";
-          }
-          if(board[0][0]=='X' &&  board[0][1]=='X' && board[0][2]=='X'){
-            winner = true;
-            return "X";
-          }
-          if(board[0][0]=='O' &&  board[0][1]=='O' && board[0][2]=='O'){
-            winner = true;
-            return "X";
-          }
-          if(board[2][0]=='X' &&  board[2][1]=='X' && board[2][2]=='X'){
-            winner = true;
-            return "X";
-          }
-          if(board[2][0]=='O' &&  board[2][1]=='O' && board[2][2]=='O'){
-            winner = true;
-            return "O";
-          }
-          if(board[0][0]=='X' &&  board[1][0]=='X' && board[2][0]=='X'){
-            winner = true;
-            return "X";
-          }
-          if(board[0][0]=='O' &&  board[1][0]=='O' && board[2][0]=='O'){
-            winner = true;
-            return "O";
-          }
-          if(board[0][1]=='X' &&  board[1][1]=='X' && board[2][1]=='X'){
-            winner = true;
-            return "X";
-          }
-          if(board[0][1]=='O' &&  board[1][1]=='O' && board[2][1]=='O'){
-            winner = true;
-            return "O";
-          }
-          if(board[0][2]=='X' &&  board[1][2]=='X' && board[2][2]=='X'){
-            winner = true;
-            return "X";
-          }
-          if(board[0][2]=='O' &&  board[1][2]=='O' && board[2][2]=='O'){
-            winner = true;
-            return "O";
-          }
-          if(board[0][0]=='X' &&  board[1][1]=='X' && board[2][2]=='X'){
-            winner = true;
-            return "X";
-          }
-          if(board[0][0]=='O' &&  board[1][1]=='O' && board[2][2]=='O'){
-            winner = true;
-            return "O";
-          }
-          if(board[0][2]=='X' &&  board[1][1]=='X' && board[2][0]=='X'){
-            winner = true;
-            return "X";
-          }
-          if(board[0][2]=='O' &&  board[1][1]=='O' && board[2][0]=='O'){
-            winner = true;
-            return "O";
-          }
-          return null;
+        for(int i=0;i<8;i++){
+            String line=null;
+            switch (i) {
+                case 0:
+                    line = board[0][0]+board[0][1]+board[0][2];
+                    break;
+                case 1:
+                    line=board[1][0]+board[1][1]+board[1][2];
+                    break;
+                case 2:
+                    line=board[2][0]+board[2][1]+board[2][2];
+                    break;
+                case 3:
+                    line=board[0][0]+board[1][0]+board[2][0];
+                    break;
+                case 4:
+                    line=board[0][1]+board[1][1]+board[2][1];
+                    break;
+                case 5:
+                    line=board[0][2]+board[1][2]+board[2][2];
+                    break;
+                case 6:
+                    line=board[0][0]+board[1][1]+board[2][2];
+                    break;
+                case 7:
+                    line = board[0][2]+board[1][1]+board[2][0];
+                }
+            
+            if (line.equals("XXX")){
+                winner=true;
+                return "X";
+            }
+              
+            // For O winner
+            else if (line.equals("OOO")){
+                winner=true;
+                return "O";
+            }
+        }
+        return null;
     }
     public static void main(String[] args){
         TicTacToe game = new TicTacToe();
         Scanner sc = new Scanner(System.in);
-        int count=0;
-        board = new char[3][3];
-        table = new boolean[3][3];
+        HashSet<Integer> set = new HashSet<Integer>();
+        board = new String[3][3];
+        int humanMove=0;
         setUpGame();
-        setUpTable();
         System.out.println("Game Started");
-        System.out.println("Enter the player you wanna play X or O");
-        turn =sc.next().charAt(0);
-        if(turn=='X'){
-            human='X';
-            ai='O';
-        }else{
-            human='O';
-            ai='X';
-        }
-        System.out.println(turn);
         printGame();
-        int movCount=0;
          while(!winner){
-             System.out.println(turn);
-             if(turn==human){
-                int row =sc.nextInt();
-                int col =sc.nextInt();
-                if(row>3 || row<0 || col>3 || col<0){
-                    System.out.println("Invalid Input");
-                    continue;
-                }
-                if(table[row][col]==false){
-                 move(row,col);
-                 count++;
-                 table[row][col]=true;
-                }else{
-                    System.out.println("Invalid input");
-                    continue;
-                }
-                 turn='O';
-             }else if (turn==ai){
-                 Move best=bestMove();
-                 board[best.row][best.col]=ai;
-                 count++;
-                 table[best.row][best.col]=true;
-                 turn='X';
-             }
-             String ans= game.checkWin();
+             Move aiMove=bestMove();
+             System.out.println(aiMove.row);
+             System.out.println(aiMove.col);
+             board[aiMove.row][aiMove.col]="X";
+             printGame();
+             set.add(setAiMove(aiMove.row,aiMove.col));
+             String ans2=game.checkWin();
              if(winner){
-                System.out.println(ans);
-                printGame();
-                System.out.println(ans + " WON!!");
-                break;
-             }else if (movCount==9){
-                 System.out.println("Draw");
+                 System.out.println("Game Over " +ans2);
                  break;
              }
-         printGame();
+             humanMove=sc.nextInt();
+             while(set.contains(humanMove)){
+                humanMove=sc.nextInt();
+                System.out.println("Invalid Input");
+             }
+             if(!set.contains(humanMove)){
+                 move(humanMove);
+                 set.add(humanMove);
+             }
+             printGame();
+             String ans=game.checkWin();
+             if(winner){
+                 System.out.println("Game Over " +ans);
+                 break;
+             }
+             printGame();
         }
     }
 }
