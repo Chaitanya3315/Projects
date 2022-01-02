@@ -77,29 +77,22 @@ public class TicTacToe {
     bestMove.row = -1;
     bestMove.col = -1;
  
-    // Traverse all cells, evaluate minimax function
-    // for all empty cells. And return the cell
-    // with optimal value.
+    
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
         {
-            // Check if cell is empty
+           
             if (board[i][j]=='_')
             {
-                // Make the move
+                
                 board[i][j] = 'X';
  
-                // compute evaluation function for this
-                // move.
-                int moveVal = minimax(board, 0, false);
+               
+                int moveVal = minimax(board, 0, false,Integer.MIN_VALUE,Integer.MAX_VALUE);
  
-                // Undo the move
+               
                 board[i][j] = '_';
- 
-                // If the value of the current move is
-                // more than the best value, then update
-                // best/
                 if (moveVal > bestVal)
                 {
                     bestMove.row = i;
@@ -112,21 +105,16 @@ public class TicTacToe {
     return bestMove;
 }
     
-    public static int minimax(char[][] board,int depth,boolean isMax){
+    public static int minimax(char[][] board,int depth,boolean isMax,int alpha ,int beta){
         int score = evaluate(board);
  
-    // If Maximizer has won the game
-    // return his/her evaluated score
+    
     if (score == 10)
         return score;
  
-    // If Minimizer has won the game
-    // return his/her evaluated score
     if (score == -10)
         return score;
  
-    // If there are no more moves and
-    // no winner then it is a tie
     if (isMovesLeft(board) == false)
         return 0;
  
@@ -135,23 +123,24 @@ public class TicTacToe {
     {
         int best = Integer.MIN_VALUE;
  
-        // Traverse all cells
+
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
             {
-                // Check if cell is empty
+                
                 if (board[i][j]=='_')
                 {
                     // Make the move
                     board[i][j] = 'X';
  
-                    // Call minimax recursively and choose
-                    // the maximum value
-                    best = Math.max(best, minimax(board,depth + 1, !isMax));
- 
+                    best = Math.max(best, minimax(board,depth + 1, !isMax,alpha,beta));
+                    alpha = Math.max(alpha, best);
                     // Undo the move
                     board[i][j] ='_';
+
+                    if (beta <= alpha)
+                      return best;
                 }
             }
         }
@@ -163,7 +152,7 @@ public class TicTacToe {
     {
         int best = Integer.MAX_VALUE;
  
-        // Traverse all cells
+
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
@@ -174,12 +163,13 @@ public class TicTacToe {
                     // Make the move
                     board[i][j] = 'O';
  
-                    // Call minimax recursively and choose
-                    // the minimum value
-                    best = Math.min(best, minimax(board,depth + 1, !isMax));
- 
+                   
+                    best = Math.min(best, minimax(board,depth + 1, !isMax,alpha ,beta));
+                    beta=Math.min(best,beta);
                     // Undo the move
                     board[i][j] = '_';
+                    if (beta <= alpha)
+                      return best;
                 }
             }
         }
