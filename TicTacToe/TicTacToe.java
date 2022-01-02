@@ -77,29 +77,20 @@ public class TicTacToe {
     bestMove.row = -1;
     bestMove.col = -1;
  
-    // Traverse all cells, evaluate minimax function
-    // for all empty cells. And return the cell
-    // with optimal value.
+    
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
         {
-            // Check if cell is empty
+           
             if (board[i][j]=='_')
             {
-                // Make the move
+               
                 board[i][j] = 'X';
  
-                // compute evaluation function for this
-                // move.
                 int moveVal = minimax(board, 0, false);
  
-                // Undo the move
                 board[i][j] = '_';
- 
-                // If the value of the current move is
-                // more than the best value, then update
-                // best/
                 if (moveVal > bestVal)
                 {
                     bestMove.row = i;
