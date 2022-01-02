@@ -72,7 +72,7 @@ public class TicTacToe {
         }
     }
     public static Move bestMove(char[][] board){
-        int bestVal = -1000;
+    int bestVal = -1000;
     Move bestMove = new Move();
     bestMove.row = -1;
     bestMove.col = -1;
@@ -115,18 +115,15 @@ public class TicTacToe {
     public static int minimax(char[][] board,int depth,boolean isMax){
         int score = evaluate(board);
  
-    // If Maximizer has won the game
-    // return his/her evaluated score
+    
     if (score == 10)
         return score;
  
-    // If Minimizer has won the game
-    // return his/her evaluated score
+    
     if (score == -10)
         return score;
  
-    // If there are no more moves and
-    // no winner then it is a tie
+    
     if (isMovesLeft(board) == false)
         return 0;
  
@@ -135,22 +132,17 @@ public class TicTacToe {
     {
         int best = -1000;
  
-        // Traverse all cells
+
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
             {
-                // Check if cell is empty
+                
                 if (board[i][j]=='_')
                 {
-                    // Make the move
+                    
                     board[i][j] = 'X';
- 
-                    // Call minimax recursively and choose
-                    // the maximum value
                     best = Math.max(best, minimax(board,depth + 1, !isMax));
- 
-                    // Undo the move
                     board[i][j] ='_';
                 }
             }
@@ -163,22 +155,17 @@ public class TicTacToe {
     {
         int best = 1000;
  
-        // Traverse all cells
+        
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
             {
-                // Check if cell is empty
+               
                 if (board[i][j]=='_')
                 {
-                    // Make the move
+                    
                     board[i][j] = 'O';
- 
-                    // Call minimax recursively and choose
-                    // the minimum value
                     best = Math.min(best, minimax(board,depth + 1, !isMax));
- 
-                    // Undo the move
                     board[i][j] = '_';
                 }
             }
