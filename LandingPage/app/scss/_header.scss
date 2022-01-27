@@ -1,0 +1,58 @@
+.header{
+    
+    nav{
+        padding: 1.0625rem 1.5rem;
+        
+    }
+    &__logo{
+        img{
+            width:256px;
+            height:66px;
+            padding: 5px;
+        }
+    }
+    &__menu{ //mobile menu
+        span{
+           display:block;
+           width:26px;
+           height:2px;
+           background-color:$lightPink;
+           &:not(:last-child){
+               margin-bottom:5px;
+           }
+        }
+        
+    }
+    &__link{
+        a{
+            position: relative;
+            font-size:20px;
+            transition: color 300ms ease-in-out;
+            &:not(:last-child){
+                margin-right:32px;
+            }
+            &::before{
+                content:"";
+                display:block;
+                position:absolute;
+                height:5px;
+                left:0;
+                right:0;
+                bottom:-30px;
+                background:linear-gradient(to right,$pink,$lightPink);
+                opacity:0;
+                transition: opacity 300ms ease-in-out;
+            }
+            
+            &:hover {
+                color:$hotpink;
+        
+                &::before {
+                  opacity: 1;
+                  
+                }
+            }
+        
+        }
+    }
+}
