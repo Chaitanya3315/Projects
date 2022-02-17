@@ -259,4 +259,13 @@ button, .button {
 .header__link a:hover::before {
   opacity: 1;
 }
+
+.hero__image {
+  position: relative;
+  background-color: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top right;
+  min-height: 17.5rem;
+}
 /*# sourceMappingURL=style.css.map */

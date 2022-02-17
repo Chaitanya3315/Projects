@@ -1,0 +1,15 @@
+.hero{
+    &__image{
+        position: relative;
+        background-color:white;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: top right;
+        min-height: 17.5rem;
+
+    }
+
+    &__text{
+         
+    }
+}
