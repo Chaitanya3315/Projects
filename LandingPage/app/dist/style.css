@@ -259,14 +259,4 @@ button, .button {
 .header__link a:hover::before {
   opacity: 1;
 }
-
-.hero__image {
-  position: relative;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1088%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='rgba(62%2c 82%2c 163%2c 1)'%3e%3c/rect%3e%3cpath d='M -417.4941202794638%2c309 C -321.49%2c271.6 -129.49%2c127.6 62.50587972053617%2c122 C 254.51%2c116.4 350.51%2c252.2 542.5058797205362%2c281 C 734.51%2c309.8 830.51%2c240.2 1022.5058797205362%2c266 C 1214.51%2c291.8 1419.01%2c423.4 1502.505879720536%2c410 C 1586%2c396.6 1452.5%2c241.2 1440%2c199' stroke='rgba(235%2c 128%2c 144%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -428.62168826424204%2c432 C -332.62%2c386.2 -140.62%2c204.8 51.37831173575796%2c203 C 243.38%2c201.2 339.38%2c427 531.378311735758%2c423 C 723.38%2c419 819.38%2c209 1011.378311735758%2c183 C 1203.38%2c157 1405.65%2c304.2 1491.378311735758%2c293 C 1577.1%2c281.8 1450.28%2c160.2 1440%2c127' stroke='rgba(235%2c 128%2c 144%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -232.5573572793382%2c282 C -136.56%2c266.6 55.44%2c198 247.4426427206618%2c205 C 439.44%2c212 535.44%2c314.6 727.4426427206618%2c317 C 919.44%2c319.4 1015.44%2c206.4 1207.4426427206618%2c217 C 1399.44%2c227.6 1640.93%2c376 1687.4426427206618%2c370 C 1733.95%2c364 1489.49%2c223.6 1440%2c187' stroke='rgba(235%2c 128%2c 144%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -374.601127154751%2c424 C -278.6%2c382.2 -86.6%2c230.4 105.39887284524897%2c215 C 297.4%2c199.6 393.4%2c344.6 585.398872845249%2c347 C 777.4%2c349.4 873.4%2c230.6 1065.398872845249%2c227 C 1257.4%2c223.4 1470.48%2c347 1545.398872845249%2c329 C 1620.32%2c311 1461.08%2c175.4 1440%2c137' stroke='rgba(235%2c 128%2c 144%2c 1)' stroke-width='2'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1088'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
-  background-color: white;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: top right;
-  min-height: 30rem;
-}
 /*# sourceMappingURL=style.css.map */
