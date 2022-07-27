@@ -1,0 +1,32 @@
+.hero{
+    &__image{
+        border: 1px solid magenta;
+        background-image:url('/BG/Wave\ Line-5.svg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center ;
+        min-height: 17.5rem;
+
+        
+    }
+    &::before{
+        content:"";
+        position:absolute;
+        width: 100%;
+        height:25%;
+        transform :translateY(15%);
+        background-image: url('/LSF/WhatsApp\ Image\ 2022-01-26\ at\ 8.55.28\ PM.jpeg');
+        background-size: 80%;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+    &__text{
+        h1{
+            padding: 0px;
+            font-weight: 300;
+            font-size:1.875rem;
+            line-height: 1.2;
+            color: black;
+        }
+    }
+}
