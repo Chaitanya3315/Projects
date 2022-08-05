@@ -7,7 +7,7 @@
 .header{
     min-height: 100vh;
     width: 100%;
-    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(/eduford_img/banner.png);
+    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(/eduford_img/Receiption.JPG);
     background-position: center;
     background-size: cover;
     position: relative;
@@ -20,7 +20,7 @@ nav{
 
 }
 nav img{
-    width: 150px;
+    width: 200px;
 }
 .nav-links{
     flex:1;
@@ -124,7 +124,7 @@ nav .fa{
 /*-----services--*/
 
 .services{
-    width:50%;
+    width:70%;
     margin:auto;
     text-align: center;
     padding-top: 100px;
@@ -150,9 +150,9 @@ p{
     flex-basis: 31%;
     background: #fff3ff;
     border-radius: 10px;
-    margin-bottom: 5%;
+    margin-bottom: 5%;;
     padding: 20px 12px;
-    box-sizing: border-box;
+    box-sizing:border-box;
     transition: 0.5s;
 }
 h3{
@@ -318,4 +318,23 @@ h3{
         font-size: 24px;
         
     }
+}
+
+/*--- footer--*/
+.footer{
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+}
+.footer h4{
+    margin-bottom: 25px;
+    margin-top: 20px;
+    font-weight: 600;
+
+}
+.icons .fa{
+    color:red;
+    margin: 0 13px;
+    cursor: pointer;
+    padding: 18px 0;
 }
